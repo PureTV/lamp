@@ -1,3 +1,16 @@
+# Copyright (C) 2014 - 2017, Teddysun <i@teddysun.com>
+# 
+# This file is part of the LAMP script.
+#
+# LAMP is a powerful bash script for the installation of 
+# Apache + PHP + MySQL/MariaDB/Percona and so on.
+# You can install Apache + PHP + MySQL/MariaDB/Percona in an very easy way.
+# Just need to input numbers to choose what you want to install before installation.
+# And all things will be done in a few minutes.
+#
+# Website:  https://lamp.sh
+# Github:   https://github.com/teddysun/lamp
+
 #Pre-installation apache
 apache_preinstall_settings(){
 
@@ -191,6 +204,9 @@ EOF
     cp -f ${cur_dir}/conf/jquery.js ${web_root_dir}
     cp -f ${cur_dir}/conf/p.php ${web_root_dir}
     cp -f ${cur_dir}/conf/phpinfo.php ${web_root_dir}
+    cp -f ${cur_dir}/conf/favicon.ico ${web_root_dir}
+
+    chown -R apache.apache ${web_root_dir}
 
     boot_start httpd
 

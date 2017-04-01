@@ -1,3 +1,16 @@
+# Copyright (C) 2014 - 2017, Teddysun <i@teddysun.com>
+# 
+# This file is part of the LAMP script.
+#
+# LAMP is a powerful bash script for the installation of 
+# Apache + PHP + MySQL/MariaDB/Percona and so on.
+# You can install Apache + PHP + MySQL/MariaDB/Percona in an very easy way.
+# Just need to input numbers to choose what you want to install before installation.
+# And all things will be done in a few minutes.
+#
+# Website:  https://lamp.sh
+# Github:   https://github.com/teddysun/lamp
+
 load_config(){
 
 #Install location
@@ -14,40 +27,40 @@ depends_prefix=/usr/local
 web_root_dir=/data/www/default
 
 #Download root URL
-download_root_url="http://dl.teddysun.com/files"
+download_root_url="http://dl.lamp.sh/files"
 
 #parallel compile option,1:enable,0:disable
 parallel_compile=1
 
 ##Software version
 #apache2.2
-apache2_2_filename="httpd-2.2.31"
+apache2_2_filename="httpd-2.2.32"
 #apache2.4
-apache2_4_filename="httpd-2.4.23"
+apache2_4_filename="httpd-2.4.25"
 #mysql5.5
-mysql5_5_filename="mysql-5.5.52"
+mysql5_5_filename="mysql-5.5.54"
 #mysql5.6
-mysql5_6_filename="mysql-5.6.33"
+mysql5_6_filename="mysql-5.6.35"
 #mysql5.7
-mysql5_7_filename="mysql-5.7.15"
+mysql5_7_filename="mysql-5.7.17"
 set_hint ${mysql5_7_filename} "${mysql5_7_filename} (need at least 2GB RAM when building)"
 #boost
 boost_filename="boost_1_59_0"
 #mariadb5.5
-mariadb5_5_filename="mariadb-5.5.52"
+mariadb5_5_filename="mariadb-5.5.54"
 #mariadb10.0
-mariadb10_0_filename="mariadb-10.0.27"
+mariadb10_0_filename="mariadb-10.0.30"
 #mariadb10.1
-mariadb10_1_filename="mariadb-10.1.17"
+mariadb10_1_filename="mariadb-10.1.22"
 #percona5.5
-percona5_5_filename="percona-server-5.5.51-38.1"
-set_hint ${percona5_5_filename} "percona-server-5.5.51"
+percona5_5_filename="percona-server-5.5.54-38.7"
+set_hint ${percona5_5_filename} "percona-server-5.5.54"
 #percona5.6
-percona5_6_filename="percona-server-5.6.32-78.0"
-set_hint ${percona5_6_filename} "percona-server-5.6.32"
+percona5_6_filename="percona-server-5.6.35-81.0"
+set_hint ${percona5_6_filename} "percona-server-5.6.35"
 #percona5.7
-percona5_7_filename="percona-server-5.7.14-7"
-set_hint ${percona5_7_filename} "percona-server-5.7.14 (need at least 2GB RAM when building)"
+percona5_7_filename="percona-server-5.7.17-12"
+set_hint ${percona5_7_filename} "percona-server-5.7.17 (need at least 2GB RAM when building)"
 #php5.3
 php5_3_filename="php-5.3.29"
 #php5.4
@@ -55,11 +68,13 @@ php5_4_filename="php-5.4.45"
 #php5.5
 php5_5_filename="php-5.5.38"
 #php5.6
-php5_6_filename="php-5.6.26"
+php5_6_filename="php-5.6.30"
 #php7.0
-php7_0_filename="php-7.0.11"
+php7_0_filename="php-7.0.17"
+#php7.1
+php7_1_filename="php-7.1.3"
 #phpMyAdmin
-phpmyadmin_filename="phpMyAdmin-4.4.15.8-all-languages"
+phpmyadmin_filename="phpMyAdmin-4.4.15.10-all-languages"
 #opcache
 opcache_filename="zendopcache-7.0.5"
 
@@ -78,19 +93,19 @@ pcre_filename="pcre-8.39"
 #re2c
 re2c_filename='re2c-0.16'
 #libedit
-libedit_filename='libedit-20160618-3.1'
+libedit_filename='libedit-20160903-3.1'
 #imap
 imap_filename='imap-2007f'
 #libiconv
 libiconv_filename="libiconv-1.14"
 #swoole
-swoole_filename="swoole-src-1.8.10-stable"
-set_hint ${swoole_filename} "php-swoole-1.8.10"
+swoole_filename="swoole-src-2.0.7"
+set_hint ${swoole_filename} "php-swoole-2.0.7"
 #xcache
 xcache_filename="xcache-3.2.0"
 #ImageMagick
-ImageMagick_filename="ImageMagick-7.0.2-10"
-php_imagemagick_filename="imagick-3.4.3RC1"
+ImageMagick_filename="ImageMagick-7.0.5-0"
+php_imagemagick_filename="imagick-3.4.3"
 set_hint ${php_imagemagick_filename} "php-${php_imagemagick_filename}"
 #GraphicsMagick
 GraphicsMagick_filename="GraphicsMagick-1.3.24"
@@ -115,19 +130,19 @@ ZendGuardLoader56_64_filename="zend-loader-php5.6-linux-x86_64"
 #libevent
 libevent_filename="libevent-2.0.22-stable"
 #memcached
-memcached_filename="memcached-1.4.31"
+memcached_filename="memcached-1.4.36"
 #libmemcached
 libmemcached_filename="libmemcached-1.0.18"
 #php-memcache
 php_memcache_filename="memcache-3.0.8"
 #php-memcached
-php_memcached_filename="memcached-2.2.0"
+php_memcached_filename="memcached-3.0.3"
 set_hint ${php_memcached_filename} "php-${php_memcached_filename}"
 #redis
-redis_filename="redis-3.2.3"
+redis_filename="redis-3.2.8"
 #php-redis
 php_redis_filename="redis-2.2.8"
-php_redis_filename2="redis-3.0.0"
+php_redis_filename2="redis-3.1.2"
 set_hint ${php_redis_filename} "php-${php_redis_filename}"
 set_hint ${php_redis_filename2} "php-${php_redis_filename2}"
 #php-mandodb
@@ -160,7 +175,8 @@ php_arr[1]=${php5_4_filename}
 php_arr[2]=${php5_5_filename}
 php_arr[3]=${php5_6_filename}
 php_arr[4]=${php7_0_filename}
-php_arr[5]="do_not_install"
+php_arr[5]=${php7_1_filename}
+php_arr[6]="do_not_install"
 
 phpmyadmin_arr[0]=${phpmyadmin_filename}
 phpmyadmin_arr[1]="do_not_install"

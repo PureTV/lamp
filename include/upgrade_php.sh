@@ -1,3 +1,16 @@
+# Copyright (C) 2014 - 2017, Teddysun <i@teddysun.com>
+# 
+# This file is part of the LAMP script.
+#
+# LAMP is a powerful bash script for the installation of 
+# Apache + PHP + MySQL/MariaDB/Percona and so on.
+# You can install Apache + PHP + MySQL/MariaDB/Percona in an very easy way.
+# Just need to input numbers to choose what you want to install before installation.
+# And all things will be done in a few minutes.
+#
+# Website:  https://lamp.sh
+# Github:   https://github.com/teddysun/lamp
+
 #upgrade php
 upgrade_php(){
 
@@ -26,6 +39,8 @@ upgrade_php(){
         latest_php=$(curl -s http://php.net/downloads.php | awk '/Changelog/{print $2}' | grep '5.6')
     elif [ "${php_version}" == "7.0" ];then
         latest_php=$(curl -s http://php.net/downloads.php | awk '/Changelog/{print $2}' | grep '7.0')
+    elif [ "${php_version}" == "7.1" ];then
+        latest_php=$(curl -s http://php.net/downloads.php | awk '/Changelog/{print $2}' | grep '7.1')
     fi
 
     echo -e "Latest version of PHP: \033[41;37m ${latest_php} \033[0m"
@@ -84,19 +99,19 @@ upgrade_php(){
 
         with_mysql=""
         if [ -d ${mariadb_location} ]; then
-            if [ "${php_version}" == "7.0" ];then
+            if [[ "${php_version}" == "7.0" || "${php_version}" == "7.1" ]]; then
                 with_mysql="--with-mysqli=${mariadb_location}/bin/mysql_config --with-mysql-sock=/tmp/mysql.sock"
             else
                 with_mysql="--with-mysql=${mariadb_location} --with-mysqli=${mariadb_location}/bin/mysql_config --with-mysql-sock=/tmp/mysql.sock"
             fi
         elif [ -d ${mysql_location} ]; then
-            if [ "${php_version}" == "7.0" ];then
+            if [[ "${php_version}" == "7.0" || "${php_version}" == "7.1" ]]; then
                 with_mysql="--with-mysqli=${mysql_location}/bin/mysql_config --with-mysql-sock=/tmp/mysql.sock"
             else
                 with_mysql="--with-mysql=${mysql_location} --with-mysqli=${mysql_location}/bin/mysql_config --with-mysql-sock=/tmp/mysql.sock"
             fi
         elif [ -d ${percona_location} ]; then
-            if [ "${php_version}" == "7.0" ];then
+            if [[ "${php_version}" == "7.0" || "${php_version}" == "7.1" ]]; then
                 with_mysql="--with-mysqli=${percona_location}/bin/mysql_config --with-mysql-sock=/tmp/mysql.sock"
             else
                 with_mysql="--with-mysql=${percona_location} --with-mysqli=${percona_location}/bin/mysql_config --with-mysql-sock=/tmp/mysql.sock"
@@ -104,14 +119,11 @@ upgrade_php(){
         fi
 
         enable_opcache=""
-        if [[ "${php_version}" == "5.5" || "${php_version}" == "5.6" || "${php_version}" == "7.0" ]]; then
-            enable_opcache="--enable-opcache"
-        fi
-
         with_gmp="--with-gmp"
         with_icu_dir="--with-icu-dir=/usr"
-        if centosversion 5; then
-            if [[ "${php_version}" == "5.5" || "${php_version}" == "5.6" || "${php_version}" == "7.0" ]];then
+        if [[ "${php_version}" == "5.5" || "${php_version}" == "5.6" || "${php_version}" == "7.0" || "${php_version}" == "7.1" ]]; then
+            enable_opcache="--enable-opcache"
+            if centosversion 5; then
                 with_gmp="--with-gmp=/usr/local"
                 with_icu_dir="--with-icu-dir=/usr/local"
             fi

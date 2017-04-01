@@ -1,3 +1,16 @@
+# Copyright (C) 2014 - 2017, Teddysun <i@teddysun.com>
+# 
+# This file is part of the LAMP script.
+#
+# LAMP is a powerful bash script for the installation of 
+# Apache + PHP + MySQL/MariaDB/Percona and so on.
+# You can install Apache + PHP + MySQL/MariaDB/Percona in an very easy way.
+# Just need to input numbers to choose what you want to install before installation.
+# And all things will be done in a few minutes.
+#
+# Website:  https://lamp.sh
+# Github:   https://github.com/teddysun/lamp
+
 #Pre-installation php
 php_preinstall_settings(){
 
@@ -133,6 +146,11 @@ install_php(){
         tar zxf ${php7_0_filename}.tar.gz
         cd ${php7_0_filename}
 
+    elif [ "$php" == "${php7_1_filename}" ];then
+        download_file  "${php7_1_filename}.tar.gz"
+        tar zxf ${php7_1_filename}.tar.gz
+        cd ${php7_1_filename}
+
     fi
 
     error_detect "./configure ${php_configure_args}"
@@ -154,8 +172,8 @@ config_php(){
     ln -s /usr/local/php/bin/php /usr/bin/php
     ln -s /usr/local/php/bin/php-config /usr/bin/php-config
     ln -s /usr/local/php/bin/phpize /usr/bin/phpize
-    
-    if [[ "$php" == "${php5_5_filename}" || "$php" == "${php5_6_filename}" || "$php" == "${php7_0_filename}" ]]; then
+
+    if [[ "$php" == "${php5_5_filename}" || "$php" == "${php5_6_filename}" || "$php" == "${php7_0_filename}" || "$php" == "${php7_1_filename}" ]]; then
         extension_dir=`php-config --extension-dir`
         cat > ${php_location}/php.d/opcache.ini<<-EOF
 [opcache]

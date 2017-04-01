@@ -1,3 +1,16 @@
+# Copyright (C) 2014 - 2017, Teddysun <i@teddysun.com>
+# 
+# This file is part of the LAMP script.
+#
+# LAMP is a powerful bash script for the installation of 
+# Apache + PHP + MySQL/MariaDB/Percona and so on.
+# You can install Apache + PHP + MySQL/MariaDB/Percona in an very easy way.
+# Just need to input numbers to choose what you want to install before installation.
+# And all things will be done in a few minutes.
+#
+# Website:  https://lamp.sh
+# Github:   https://github.com/teddysun/lamp
+
 #Pre-installation php modules
 php_modules_preinstall_settings(){
 
@@ -17,11 +30,21 @@ php_modules_preinstall_settings(){
             php_modules_arr=(${php_modules_arr[@]#${opcache_filename}})
             php_modules_arr=(${php_modules_arr[@]#${xcache_filename}})
             php_modules_arr=(${php_modules_arr[@]#${ZendGuardLoader_filename}})
+            php_modules_arr=(${php_modules_arr[@]#${php_memcached_filename}})
+            php_modules_arr=(${php_modules_arr[@]#${php_mongo_filename}})
+            php_modules_arr=(${php_modules_arr[@]/#${php_redis_filename}/${php_redis_filename2}})
+            php_modules_arr=(${php_modules_arr[@]/#${php_graphicsmagick_filename}/${php_graphicsmagick_filename2}})
+        elif [ "$php" == "${php7_1_filename}" ];then
+            # delete some modules & change some module version
+            php_modules_arr=(${php_modules_arr[@]#${opcache_filename}})
+            php_modules_arr=(${php_modules_arr[@]#${xcache_filename}})
+            php_modules_arr=(${php_modules_arr[@]#${ZendGuardLoader_filename}})
             php_modules_arr=(${php_modules_arr[@]#${ionCube_filename}})
             php_modules_arr=(${php_modules_arr[@]#${php_memcached_filename}})
             php_modules_arr=(${php_modules_arr[@]#${php_mongo_filename}})
             php_modules_arr=(${php_modules_arr[@]/#${php_redis_filename}/${php_redis_filename2}})
             php_modules_arr=(${php_modules_arr[@]/#${php_graphicsmagick_filename}/${php_graphicsmagick_filename2}})
+
         fi
         display_menu_multi php_modules last
     fi
@@ -48,7 +71,7 @@ install_php_modules(){
     if_in_array "${php_memcached_filename}" "$php_modules_install" && install_php_memcached "${phpConfig}"
     if_in_array "${php_mongo_filename}" "$php_modules_install" && install_php_mongo "${phpConfig}"
     if_in_array "${swoole_filename}" "$php_modules_install" && install_swoole "${phpConfig}"
-    if [ "$php" == "${php7_0_filename}" ]; then
+    if [ "$php" == "${php7_0_filename}" ] || [ "$php" == "${php7_1_filename}" ]; then
         if_in_array "${php_graphicsmagick_filename2}" "$php_modules_install" && install_php_graphicsmagick "${phpConfig}"
         if_in_array "${php_redis_filename2}" "$php_modules_install" && install_php_redis "${phpConfig}"
     else
@@ -250,7 +273,7 @@ install_libedit(){
     tar zxf ${libedit_filename}.tar.gz
     cd ${libedit_filename}
 
-    error_detect "./configure --enable-widec"
+    error_detect "./configure"
     error_detect "parallel_make"
     error_detect "make install"
 }
@@ -520,7 +543,7 @@ install_php_graphicsmagick(){
 
     cd ${cur_dir}/software/
 
-    if [ "$php" == "${php7_0_filename}" ]; then
+    if [ "$php" == "${php7_0_filename}" ] || [ "$php" == "${php7_1_filename}" ]; then
         download_file "${php_graphicsmagick_filename2}.tgz"
         tar zxf ${php_graphicsmagick_filename2}.tgz
         cd ${php_graphicsmagick_filename2}
@@ -700,7 +723,7 @@ install_php_redis(){
     if [ ${RT} -eq 0 ];then
         cd ${cur_dir}/software/
         echo "php-redis install start..."
-        if [ "$php" == "${php7_0_filename}" ]; then
+        if [ "$php" == "${php7_0_filename}" ] || [ "$php" == "${php7_1_filename}" ]; then
             download_file  "${php_redis_filename2}.tgz"
             tar zxf ${php_redis_filename2}.tgz
             cd ${php_redis_filename2}
